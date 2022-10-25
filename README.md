@@ -39,6 +39,8 @@ Pour récupérer cet identifiant, nous devons suivre un schéma bien précis. Il
 
 <p align="center">
  
+</p>
+<p align="center">
 Figure 3 : JSP
 </p>
 
@@ -48,6 +50,8 @@ Puis, il faut recevoir les données que renvoie le capteur. Il nous renvoie son 
 
 <p align="center">
  
+</p>
+<p align="center">
 Figure 4 : JSP
 </p>
 
@@ -64,7 +68,9 @@ On peut aussi noter la présence du type de variable uint8_t à la place d’un 
 Pour configurer le SSID et le mot de passe  du wifi, nous utilisons le logiciel Raspberry Pi Imager. Cependant, pour connecter le port série du GPIO, nous modifions le contenu du fichier config.txt. Nous ajoutons les deux lignes suivantes à la fin du fichier :
 
 <p align="center">
-
+ 
+</p>
+<p align="center">
 Figure 5 : Fin du fichier config.txt
 </p>
 
@@ -76,7 +82,9 @@ L’équipement qui gère l’attribution de ces adresses est le routeur. En nou
 “Comment le savons-nous ?” - Nous avons utilisé le logiciel Angry Ip Scanner qui nous permet d’afficher tous les appareils (et donc adresses IP) présents sur le réseau local. Voici une capture de quelques adresses présentes dessus : 
 
 <p align="center">
-
+ 
+</p>
+<p align="center">
 Figure 6 : Capture du logiciel Angry Ip Scanner
 </p>
  
@@ -88,7 +96,9 @@ Dans ce tableau, on retrouve bien notre raspberry pi à l’adresse 192.168.88.2
 #### Loopback
 
 <p align="center">
-
+ 
+</p>
+<p align="center">
 Figure 7 : Paramètre du minicom
 </p>
 
@@ -104,14 +114,18 @@ Lorsqu’on relie le raspberry et la stm32, il ne faut pas oublier de relier les
 Voici à quoi ressemble le système en l’état :
 
 <p align="center">
-
+ 
+</p>
+<p align="center">
 Figure 8 : Schéma du système actuel
 </p>
 
 Ensuite, nous avons testé si la communication entre le Raspberry et la STM32 est bien établie. Nous avons donc uniquement fait communiquer les deux cartes entres-elles :
 
 <p align="center">
-
+ 
+</p>
+<p align="center">
 Figure 9 : Envoi de la température sur la RPI
 </p>
 
