@@ -1,4 +1,4 @@
-CR TP Capteurs et réseaux
+# Compte rendu du TP Capteurs et réseaux
 
 ## Introduction
 
@@ -12,9 +12,9 @@ Ce projet est le résultat de 5 séances de TP fait en dernière année d'école
  <img width="1078" alt="Capture d’écran 2022-10-19 à 08 27 27" src="https://user-images.githubusercontent.com/13495977/197718754-501ed17b-c1ef-42ed-ab40-3fafb46427bc.png">
  Figure 1 : Memory map
 </p>
-Il existe deux adresses possibles pour ce composant : 0x76 et 0x77. Cela dépend de où est connecté SDO (sur le GND ou sur VDDIO respectivement). Dans notre cas, nous utiliserons l’adresse 0x77.
- Le registre 0xD0 permet d’identifier ce composant. Sa valeur est 0x58.
-Le registre permettant de placer le composant en mode normal est 0xF4. La Figure 2 ci-dessous nous présente les différents modes de fonctionnements possibles du capteur. Dans notre cas, il faut mettre les deux bits de poids faible à un pour que le capteur soit en mode normal.
+* Il existe deux adresses possibles pour ce composant : 0x76 et 0x77. Cela dépend de où est connecté SDO (sur le GND ou sur VDDIO respectivement). Dans notre cas, nous utiliserons l’adresse 0x77.
+* Le registre 0xD0 permet d’identifier ce composant. Sa valeur est 0x58.
+* Le registre permettant de placer le composant en mode normal est 0xF4. La Figure 2 ci-dessous nous présente les différents modes de fonctionnements possibles du capteur. Dans notre cas, il faut mettre les deux bits de poids faible à un pour que le capteur soit en mode normal.
 
 <p align="center">
 <img width="333" alt="Capture d’écran 2022-10-25 à 10 03 41" src="https://user-images.githubusercontent.com/13495977/197718942-b4600be4-9208-4a67-a0b9-d0f2382a0b53.png"></p>
@@ -22,10 +22,10 @@ Le registre permettant de placer le composant en mode normal est 0xF4. La Figure
 Figure 2 : Mode settings
 </p>
 
-Les registres 0x88 à 0xA1 permettent de faire l’étalonnage du capteur. 
-Les registres contenant la température vont de 0xFA à 0xFC. Les données sont sur 20 bits (non-signés), que ce soit pour la température ou pour la pression.
-Les registres contenant la pression vont de 0xF7 à 0xF9.
-La fonction bmp280_compensate_T_int32(BMP280_S32_t adc_T) permet le calcul de la température au format 32 bits.  bmp280_compensate_P_int64(BMP280_S32_t adc_P) permet le calcul de la pression au format 32 bits.
+* Les registres 0x88 à 0xA1 permettent de faire l’étalonnage du capteur. 
+* Les registres contenant la température vont de 0xFA à 0xFC. Les données sont sur 20 bits (non-signés), que ce soit pour la température ou pour la pression.
+* Les registres contenant la pression vont de 0xF7 à 0xF9.
+* La fonction bmp280_compensate_T_int32(BMP280_S32_t adc_T) permet le calcul de la température au format 32 bits.  bmp280_compensate_P_int64(BMP280_S32_t adc_P) permet le calcul de la pression au format 32 bits.
 
 
 ### Trouver l’id du capteur BMP 280 : 
@@ -97,8 +97,8 @@ Dans le minicom, nous avons désactivé le flux matériel (“Hardware Flow Cont
 
 Lorsqu’on relie le raspberry et la stm32, il ne faut pas oublier de relier les masses des deux pour avoir une masse commune. C’est préférable de le faire pour deux raisons :
 
-Premièrement, une masse différente pourrait endommager des composants, car il y a une différence dans la tension de référence (alimentation usb et alimentation ordi portable par exemple).
-Deuxièmement, cette différence de masse peut provoquer des perturbations dans l’envoi et la réception des signaux, car ils ne sont pas sur le même point de référence commun.
+* Premièrement, une masse différente pourrait endommager des composants, car il y a une différence dans la tension de référence (alimentation usb et alimentation ordi portable par exemple).
+* Deuxièmement, cette différence de masse peut provoquer des perturbations dans l’envoi et la réception des signaux, car ils ne sont pas sur le même point de référence commun.
 
 Voici à quoi ressemble le système en l’état :
 
