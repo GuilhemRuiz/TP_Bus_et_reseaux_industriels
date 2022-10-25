@@ -10,14 +10,15 @@ Ce projet est le résultat de 5 séances de TP fait en dernière année d'école
 
 <p align="center">
  <img width="1078" alt="Capture d’écran 2022-10-19 à 08 27 27" src="https://user-images.githubusercontent.com/13495977/197718754-501ed17b-c1ef-42ed-ab40-3fafb46427bc.png">
-Figure 1 : Memory map
+ Figure 1 : Memory map
 </p>
 Il existe deux adresses possibles pour ce composant : 0x76 et 0x77. Cela dépend de où est connecté SDO (sur le GND ou sur VDDIO respectivement). Dans notre cas, nous utiliserons l’adresse 0x77.
  Le registre 0xD0 permet d’identifier ce composant. Sa valeur est 0x58.
 Le registre permettant de placer le composant en mode normal est 0xF4. La Figure 2 ci-dessous nous présente les différents modes de fonctionnements possibles du capteur. Dans notre cas, il faut mettre les deux bits de poids faible à un pour que le capteur soit en mode normal.
 
 <p align="center">
-<img width="333" alt="Capture d’écran 2022-10-25 à 10 03 41" src="https://user-images.githubusercontent.com/13495977/197718942-b4600be4-9208-4a67-a0b9-d0f2382a0b53.png">
+<img width="333" alt="Capture d’écran 2022-10-25 à 10 03 41" src="https://user-images.githubusercontent.com/13495977/197718942-b4600be4-9208-4a67-a0b9-d0f2382a0b53.png"></p>
+<p align="center">
 Figure 2 : Mode settings
 </p>
 
