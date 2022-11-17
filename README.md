@@ -298,7 +298,7 @@ Cependant, cela ne fonctionne pas. Nous sommes certains que le capteur de tempé
 
 
 <p align="center">
- <img width="757" alt="valCaptTempPression" src="https://user-images.githubusercontent.com/114395436/202497538-a7f2b236-3802-4c6b-9d19-e663563d64a0.png">
+ <img width="333" alt="valCaptTempPression" src="https://user-images.githubusercontent.com/114395436/202497538-a7f2b236-3802-4c6b-9d19-e663563d64a0.png">
 </p>
 <p align="center">Fig XX - Valeurs du capteur de température et de pression en hexa</p>
 
