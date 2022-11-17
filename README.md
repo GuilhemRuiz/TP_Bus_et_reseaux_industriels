@@ -26,7 +26,7 @@ Figure 2 : Mode settings
 * Les registres 0x88 à 0xA1 permettent de faire l’étalonnage du capteur. 
 * Les registres contenant la température vont de 0xFA à 0xFC. Les données sont sur 20 bits (non-signés), que ce soit pour la température ou pour la pression.
 * Les registres contenant la pression vont de 0xF7 à 0xF9.
-* La fonction bmp280_compensate_T_int32(BMP280_S32_t adc_T) permet le calcul de la température au format 32 bits.  bmp280_compensate_P_int64(BMP280_S32_t adc_P) permet le calcul de la pression au format 32 bits.
+* La fonction `bmp280_compensate_T_int32(BMP280_S32_t adc_T)` permet le calcul de la température au format 32 bits.  `bmp280_compensate_P_int64(BMP280_S32_t adc_P)` permet le calcul de la pression au format 32 bits.
 
 
 ### Trouver l’id du capteur BMP 280 : 
@@ -42,8 +42,7 @@ Pour récupérer cet identifiant, nous devons suivre un schéma bien précis. Il
 </p>
 <p align="center">
 <img width="333" alt="boDessinWrite1" src="https://user-images.githubusercontent.com/114395436/202483787-9f77bcc1-964a-4933-81b6-f7e9b49e32cb.png">
- </p>
-<p align="center">
+
 Figure 3 : JSP
 </p>
 
@@ -56,14 +55,13 @@ Puis, il faut recevoir les données que renvoie le capteur. Il nous renvoie son 
 </p>
 <p align="center">
 <img width="333" alt="boDessinWrite2" src="https://user-images.githubusercontent.com/114395436/202483570-b0921605-6999-439e-8641-d4063d8e3a7b.png">
-</p>
-<p align="center">
+
 Figure 4 : JSP
 </p>
 
 La trame est sensiblement la même que précédemment, à défaut que le message envoyé par le capteur BMP280 correspond à son ID, c’est-à-dire 0x58. Il est intéressant de noter que le bit d’écriture/lecture est mis à 1, car nous sommes en mode lecture.
 
-On peut aussi noter la présence du type de variable uint8_t à la place d’un int pour déclarer le tableau. Chaque case du tableau fait un octet, contrairement à un int qui en contient deux. Comme l’I2C ne peut envoyer qu’un octet à la fois, il est préférable d’utiliser uint8_t.
+On peut aussi noter la présence du type de variable uint8_t à la place d’un int pour déclarer le tableau. Chaque case du tableau fait un octet, contrairement à un int qui en contient deux. Comme l’I2C ne peut envoyer qu’un octet à la fois, il est préférable d’utiliser `uint8_t`.
 
 
 
@@ -73,13 +71,10 @@ On peut aussi noter la présence du type de variable uint8_t à la place d’un 
 
 Pour configurer le SSID et le mot de passe  du wifi, nous utilisons le logiciel Raspberry Pi Imager. Cependant, pour connecter le port série du GPIO, nous modifions le contenu du fichier config.txt. Nous ajoutons les deux lignes suivantes à la fin du fichier :
 
-<p align="center">
- 
-</p>
-<p align="center">
-Figure 5 : Fin du fichier config.txt
-</p>
-
+```
+enable_uart=1
+dtoverlay=disable-bt
+```
 Pour que le noyau libère le port UART, nous supprimons la ligne “console=serial0,115200” dans le fichier cmdline.txt.
 
 “Comment la raspberry a obtenu son adresse IP ?” - Avant de commencer, il faut préciser que nous sommes sur un réseau local. Les adresses qui sont distribuées sont donc… locales.
@@ -92,8 +87,6 @@ L’équipement qui gère l’attribution de ces adresses est le routeur. En nou
 </p>
 <p align="center">
 <img width="333" alt="angryIp" src="https://user-images.githubusercontent.com/114395436/202483086-78ad399c-f4c5-4796-bde3-e28e3fceb7a7.png">
- </p>
-<p align="center">
 Figure 6 : Capture du logiciel Angry Ip Scanner
 </p>
  
@@ -109,8 +102,7 @@ Dans ce tableau, on retrouve bien notre raspberry pi à l’adresse 192.168.88.2
 </p>
 <p align="center">
 <img width="333" alt="paramMinicom" src="https://user-images.githubusercontent.com/114395436/202482958-b989a22f-5f5e-4eac-b8a2-af6864169e1f.png">
-</p>
-<p align="center">
+
 Figure 7 : Paramètre du minicom
 </p>
 
@@ -130,8 +122,7 @@ Voici à quoi ressemble le système en l’état :
 </p>
 <p align="center">
 <img width="333" alt="boDessin" src="https://user-images.githubusercontent.com/114395436/202482802-a27f1afb-e03b-4bc5-a1d6-545db078ad78.png">
-</p>
-<p align="center">
+
 Figure 8 : Schéma du système actuel
 </p>
 
@@ -142,8 +133,6 @@ Ensuite, nous avons testé si la communication entre le Raspberry et la STM32 es
 </p>
 <p align="center">
 <img width="333" alt="putty1250" src="https://user-images.githubusercontent.com/114395436/202482557-d067802d-9c0b-434e-9fde-da28bb15ee79.png">
- </p>
-<p align="center">
 Figure 9 : Envoi de la température sur la RPI
 </p>
 
@@ -175,3 +164,10 @@ while (1)
  }
  HAL_Delay(1000);
  ```
+ 
+<p align="center">
+ 
+</p>
+<p align="center">
+Figure 5 : Fin du fichier config.txt
+</p>
