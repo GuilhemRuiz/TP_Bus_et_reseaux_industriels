@@ -131,6 +131,21 @@ Figure 9 : Envoi de la température sur la RPI
 
 Nous recevons bien les valeurs de température du capteur connecté à la STM32 sur le Raspberry.
 La communication entre les deux cartes est donc correcte. Nous pouvons donc essayer d’envoyer des requêtes et voir si nous recevons les valeurs souhaitées.
+```Python
+@app.route('/api/request/temp/', methods=['GET', 'POST'])
+def request_temp():
+        if request.method == 'GET':
+                ser = serial.Serial('/dev/ttyAMA0')
+                ser.baudrate = 115200
+                ser.close()   
+                ser.open()
+                ser.write(5)
+                test = ser.write(5)
+                print(test)
+                temp = ser.read()
+                insererValTab(temp)
+                return temp, 205
+```
 
 ```C
 while (1)
