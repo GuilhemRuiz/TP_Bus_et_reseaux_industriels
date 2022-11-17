@@ -20,7 +20,7 @@
 <p align="center">
 <img width="333" alt="Capture d’écran 2022-10-25 à 10 03 41" src="https://user-images.githubusercontent.com/13495977/197718942-b4600be4-9208-4a67-a0b9-d0f2382a0b53.png"></p>
 <p align="center">
-Figure 2 : Mode settings
+Figure 2 : Réglages mémoire
 </p>
 
 * Les registres 0x88 à 0xA1 permettent de faire l’étalonnage du capteur. 
@@ -41,7 +41,7 @@ Pour récupérer cet identifiant, nous devons suivre un schéma bien précis. Il
 <img width="333" alt="boDessinWrite1" src="https://user-images.githubusercontent.com/114395436/202483787-9f77bcc1-964a-4933-81b6-f7e9b49e32cb.png">
 </p>
 <p align="center">
-Figure 3 : JSP
+Figure 3 : Écriture de trame
 </p>
 
 <p align ="justify">Afin de savoir quand commence le message, le signal est mis à 1, puis à 0. L’adresse du composant est présente dans la trame, ici c’est 0x77. Elle est suivie d’un bit à 0 qui indique à la carte qu’on écrit/envoie un message. Ce message est l’adresse de l’id du capteur BMP280. Dans notre cas, on envoie 0xD0 et la carte est censée nous renvoyer 0x58.
@@ -52,12 +52,12 @@ Puis, il faut recevoir les données que renvoie le capteur. Il nous renvoie son 
 <img width="333" alt="boDessinWrite2" src="https://user-images.githubusercontent.com/114395436/202483570-b0921605-6999-439e-8641-d4063d8e3a7b.png">
 </p>
 <p align="center">
-Figure 4 : JSP
+Figure 4 : Lecture de trame
 </p>
 
 <p align ="justify">La trame est sensiblement la même que précédemment, à défaut que le message envoyé par le capteur BMP280 correspond à son ID, c’est-à-dire 0x58. Il est intéressant de noter que le bit d’écriture/lecture est mis à 1, car nous sommes en mode lecture.
 
-On peut aussi noter la présence du type de variable uint8_t à la place d’un int pour déclarer le tableau. Chaque case du tableau fait un octet, contrairement à un int qui en contient deux. Comme l’I2C ne peut envoyer qu’un octet à la fois, il est préférable d’utiliser `uint8_t`.</p>
+On peut aussi noter la présence du type de variable `uint8_t` à la place d’un int pour déclarer le tableau. Chaque case du tableau fait un octet, contrairement à un int qui en contient deux. Comme l’I2C ne peut envoyer qu’un octet à la fois, il est préférable d’utiliser `uint8_t`.</p>
 
 
 
@@ -103,9 +103,9 @@ Figure 6 : Capture du logiciel Angry Ip Scanner
 
 #### Communication avec la STM32
 
-<p align ="justify">Lorsqu’on relie le raspberry et la stm32, il ne faut pas oublier de relier les masses des deux pour avoir une masse commune. C’est préférable de le faire pour deux raisons :</p>
+<p align ="justify">Lorsqu’on relie la Raspberry et la STM32, il ne faut pas oublier de relier les masses des deux pour avoir une masse commune. C’est préférable de le faire pour deux raisons :</p>
 
-* Premièrement, une masse différente pourrait endommager des composants, car il y a une différence dans la tension de référence (alimentation usb et alimentation ordi portable par exemple).
+* Premièrement, une masse différente pourrait endommager des composants, car il y a une différence dans la tension de référence (alimentation USB et alimentation ordi portable par exemple).
 * Deuxièmement, cette différence de masse peut provoquer des perturbations dans l’envoi et la réception des signaux, car ils ne sont pas sur le même point de référence commun.
 
 <p align ="justify">Voici à quoi ressemble le système en l’état :</p>
@@ -231,24 +231,18 @@ curl -X POST http://192.168.88.242:5001/api/welcome/14
 <p align="center">
 Figure 16 : Requêtes GET et POST
 </p>
- 
-<p align="center">
- 
-</p>
-<p align="center">
-Figure 5 : Fin du fichier config.txt
-</p>
+
 
 ## Séance 5 - Mise en commun des TP précédents
 
 ### Introduction au TP
 
-<p align ="justify">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure XX), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
+<p align ="justify">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure 17), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
 
 <p align="center">
  <img width="757" alt="cmdApiRest" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
-<p align="center">Fig XX - Nouvelles commandes de l'API REST</p>
+<p align="center">Figure 17 - Nouvelles commandes de l'API REST</p>
 
 ### Réception et transmission - Trame du bus CAN
 
@@ -258,7 +252,7 @@ Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à
 <p align="center">
  <img width="757" alt="trameBusCAN" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
-<p align="center">Fig XX - Trame Bus CAN</p>
+<p align="center">Figure 18 - Trame Bus CAN</p>
 
 <p align ="justify">Comme nous manquons de temps, nous nous concentrons sur le capteur et sur les commandes de l’API liées. Nous étoffons donc notre code Python avec une nouvelle fonction :</p>
 
