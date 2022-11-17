@@ -233,8 +233,62 @@ La commande ci-dessus ne fonctionne pas. C’est tout à fait normal puisque l�
 Figure 16 : Requêtes GET et POST
 </p>
 
+```Python
+@app.route('/api/welcome/<int:index>', methods=['GET','POST'])
+```
 
+<p align="center">
+<img width="750" alt="Capture d’écran 2022-11-17 à 16 54 16" src="https://user-images.githubusercontent.com/13495977/202494386-c7c2ef23-830a-40c5-a5ec-ae9506502af1.png">
+</p>
+<p align="center">
+Figure 16 : Requête POST
+</p>
 
+```Python
+@app.route('/api/request/', methods=['GET', 'POST'])
+@app.route('/api/request/<path>', methods=['GET','POST'])
+def api_request(path=None):
+   resp = {
+           "method":   request.method,
+           "url" :  request.url,
+           "path" : path,
+           "args": request.args,
+           "headers": dict(request.headers),
+   }
+   if request.method == 'POST':
+       resp["POST"] = {
+               "data" : request.get_json(),
+               }
+   if request.method == 'GET':
+       resp = request.url
+   return jsonify(resp)
+```
+
+## Séance 4 
+
+Le but de la séance est d’envoyer des commandes par protocole CAN à un moteur afin de le piloter. Nous utilisons pour ce faire une carte STM32 nucléo ainsi qu’un shield pour le CAN. 
+
+Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, la HAL_CAN_AddTxMessage nécéssite certains paramètres pour fonctionner, notamment pHeader, une structure comprenant les champs suivants :
+* `.StdId` contient le message ID quand celui-ci est standard (11 bits)
+* `.ExtId` contient le message ID quand celui-ci est étendu (29 bits) 
+* `.IDE` définit si la trame est standard (CAN_ID_STD) ou étendue (CAN_ID_EXT)
+* `.RTR` définit si la trame est du type standard (CAN_RTR_DATA) ou RTR (CAN_RTR_REMOTE) (voir le cours)
+* `.DLC` entier représentant la taille des données à transmettre (entre 0 et 8)
+* `.TransmitGlobal` dispositif permettant de mesurer les temps de réponse du bus CAN, qu'on utilisera pas. Le fixer à DISABLE
+Dans notre cas, nous voulons envoyer un message standard, donc `.ExtId` est mis à 0. Pour .StdId nous l’avons mis à 0x60. La Figure ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
+
+<p align="center">
+ <img width="744" alt="Capture d’écran 2022-11-17 à 16 58 33" src="https://user-images.githubusercontent.com/13495977/202495488-7c29a34c-8277-4e7f-8e9b-d8cb1bcdbac3.png">
+</p>
+<p align="center">
+Figure 17 : Les différents modes de fonctionnement du moteur
+</p>
+
+Nous avons choisi de nous mettre en mode manuel. Il nous faut donc 3 valeurs : D0 (correspondant au sens de rotation) que nous avons mis à 0, D1 (correspondant à l’angle parcouru par le moteur à chaque itération) que nous avons mis à 0x2D (pour avoir 45°) et enfin D2 (correspondant à la vitesse de rotation) que nous avons mis à la valeur maximum : 0xFF.
+
+Cependant, notre moteur ne tourne pas. Nous ne comprenons pas d’où provient l’erreur. Le code semble correct et pourtant l’électronique est bonne. 
+Pour comprendre ce qui se passe, nous utilisons un oscilloscope qui va nous permettre de déterminer si nous envoyons des données. Il s’avère que ce n’est pas le cas. On vérifie le câblage du shield sur la Nucleo. Tout est bien branché, il n’y a pas de faux contacts, c’est le software qui est fautif. Malheureusement, nous ne pouvons plus continuer, la séance de TP touche à sa fin.
+Cependant, nous avons retiré une inconnue et nous avons déterminé que c’était la partie logicielle qui était responsable du bug.
 
 ```Python
 @app.route('/api/request/temp/', methods=['GET', 'POST'])
