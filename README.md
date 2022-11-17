@@ -2,7 +2,7 @@
 
 ## Introduction
 
-<p align ="justify">Ce projet est le résultat de 5 séances de TP fait en dernière année d'école d'ingénieur à l'ENSEA. L’objectif final est de pouvoir récupérer différentes mesures sur une STM32, tel que la température ou la pression grâce au capteur BMP280, de les envoyer vers une Raspberry Pi. Cette dernière pourra afficher les valeurs et l’utilisateur pourra y faire des requêtes telles que demander de nouvelles mesures ou les effacer. Le but des différents TP est de nous faire comprendre le principe et l'utilité de plusieurs bus industriels tels que le CAN, l’I2C et le SPI, ainsi que des liaisons comme l’UART.</p>
+<p align ="justify">Ce projet est le résultat de 5 séances de TP fait en dernière année d'école d'ingénieur à l'ENSEA. L’objectif final est de pouvoir récupérer différentes mesures sur une STM32, tel que la température ou la pression grâce au capteur BMP280, de les envoyer vers une Raspberry Pi, ainsi que de faire fonctionner un moteur à pas. La Raspberry Pi pourra afficher les valeurs et l’utilisateur pourra y faire des requêtes telles que demander de nouvelles mesures ou les effacer. Le but des différents TP est de nous faire comprendre le principe et l'utilité de plusieurs bus industriels tels que le CAN, l’I2C et le SPI, ainsi que des liaisons comme l’UART.</p>
 
 ## Séance 1 - Bus I2C :
 
@@ -26,7 +26,7 @@ Figure 2 : Mode settings
 * Les registres 0x88 à 0xA1 permettent de faire l’étalonnage du capteur. 
 * Les registres contenant la température vont de 0xFA à 0xFC. Les données sont sur 20 bits (non-signés), que ce soit pour la température ou pour la pression.
 * Les registres contenant la pression vont de 0xF7 à 0xF9.
-* La fonction `bmp280_compensate_T_int32(BMP280_S32_t adc_T)` permet le calcul de la température au format 32 bits.  `bmp280_compensate_P_int64(BMP280_S32_t adc_P)` permet le calcul de la pression au format 32 bits.
+* <p align ="justify">La fonction `bmp280_compensate_T_int32(BMP280_S32_t adc_T)` permet le calcul de la température au format 32 bits.  `bmp280_compensate_P_int64(BMP280_S32_t adc_P)` permet le calcul de la pression au format 32 bits.</p>
 
 
 ### Trouver l’id du capteur BMP 280 : 
@@ -132,8 +132,8 @@ La communication entre les deux cartes est donc correcte. Nous pouvons donc essa
 ## Séance 3 - API REST
 
 ### Installation 
-<p align ="justify">Après avoir créé un nouvel utilisateur sur la RPI, on lui affecte différents droits, ici celui d’utiliser le port série et celui d’utiliser les commandes super utilisateurs.
-Le fait d’affecter à la main chaque droit de chaque nouvel utilisateur permet de limiter la casse en cas de piratage. Par exemple, dans le cas où ce nouvel utilisateur se fait pirater, le hackeur n’aura que le droit d’accès au port série et le droit d’utiliser des commandes super utilisateurs (mais il faudra alors un autre mot de passe). 
+<p align ="justify">Après avoir créé un nouvel utilisateur sur la RPI, on lui affecte différents droits, ici celui d’utiliser le port série et celui d’utiliser les commandes super utilisateur.
+Le fait d’affecter à la main chaque droit de chaque nouvel utilisateur permet de limiter la casse en cas de piratage. Par exemple, dans le cas où ce nouvel utilisateur se fait pirater, le hackeur n’aura que le droit d’accès au port série et le droit d’utiliser des commandes super utilisateur (mais il faudra alors un autre mot de passe). 
 Créons maintenant un serveur web. Pour cela nous allons utiliser le framework Flask.</p>
 
 ```pi@raspberrypi:~/server $ FLASK_APP=hello.py FLASK_ENV=development flask run --host 0.0.0.0```
@@ -156,7 +156,7 @@ Figure 10 : URL de notre site web
  <img width="727" alt="Capture d’écran 2022-11-17 à 16 30 53" src="https://user-images.githubusercontent.com/13495977/202488545-37534af4-2450-479e-87b3-38bb208a289c.png">
 </p>
 <p align="center">
-Figure 11 : Message d'arreur du site web
+Figure 11 : Message d'erreur du site web
 </p>
 
 <p align ="justify">Lorsqu’on rajoute la ligne de code suivante et qu’on utilise l’aide F12 sur chrome, on peut observer les tentatives de connexions au serveur web. </p>
@@ -173,7 +173,7 @@ Figure 12 et 13 : JSP
 
 <p align ="justify">Contrairement à notre première tentative, on remarque que le serveur a répondu et que le contenu sur le serveur web a été téléchargé. La connexion est établie.
 
-si on ajoute ce bout de code :</p>
+Si on ajoute ce bout de code :</p>
 
 ```Python
 @app.errorhandler(404)
@@ -181,8 +181,7 @@ def page_not_found(error):
     return render_template('page_not_found.html'), 404
 ```
 
-<p align ="justify">la page d’erreur change et donne :</p>
-
+<p align ="justify">La page d’erreur change et donne :</p>
 
 
 <p align="center">
