@@ -26,7 +26,7 @@ Figure 2 : Réglages mémoire
 * Les registres 0x88 à 0xA1 permettent de faire l’étalonnage du capteur. 
 * Les registres contenant la température vont de 0xFA à 0xFC. Les données sont sur 20 bits (non-signés), que ce soit pour la température ou pour la pression.
 * Les registres contenant la pression vont de 0xF7 à 0xF9.
-* <p align ="justify">La fonction `bmp280_compensate_T_int32(BMP280_S32_t adc_T)` permet le calcul de la température au format 32 bits.  `bmp280_compensate_P_int64(BMP280_S32_t adc_P)` permet le calcul de la pression au format 32 bits.</p>
+* La fonction `bmp280_compensate_T_int32(BMP280_S32_t adc_T)` permet le calcul de la température au format 32 bits.  `bmp280_compensate_P_int64(BMP280_S32_t adc_P)` permet le calcul de la pression au format 32 bits.
 
 
 ### Trouver l’id du capteur BMP 280 : 
