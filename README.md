@@ -138,6 +138,37 @@ Figure 9 : Envoi de la température sur la RPI
 
 Nous recevons bien les valeurs de température du capteur connecté à la STM32 sur le Raspberry.
 La communication entre les deux cartes est donc correcte. Nous pouvons donc essayer d’envoyer des requêtes et voir si nous recevons les valeurs souhaitées.
+
+## Séance 3 - API REST
+
+### Installation 
+Après avoir créé un nouvel utilisateur sur la RPI, on lui affecte différents droits, ici celui d’utiliser le port série et celui d’utiliser les commandes super utilisateurs.
+Le fait d’affecter à la main chaque droit de chaque nouvel utilisateur permet de limiter la casse en cas de piratage. Par exemple, dans le cas où ce nouvel utilisateur se fait pirater, le hackeur n’aura que le droit d’accès au port série et le droit d’utiliser des commandes super utilisateurs (mais il faudra alors un autre mot de passe). 
+Créons maintenant un serveur web. Pour cela nous allons utiliser le framework Flask. 
+
+```pi@raspberrypi:~/server $ FLASK_APP=hello.py FLASK_ENV=development flask run --host 0.0.0.0```
+
+Cette commande nous permet de sortir de la loopback. C’est-à-dire, qu’avant cette commande, nous ne restons que sur le terminal.  Après cette commande, nous pouvons afficher notre « Hello World ! » sur notre serveur web sur le même réseau local.
+Pour vérifier si le programme fonctionne correctement, il suffit de rentrer l’adresse IP du Raspberry et son port (192.168.88.242:5000) sur notre navigateur favori.
+« Host 0.0.0.0 » explique à notre Raspberry qu’on lance le serveur web à l’adresse actuelle, donc 192.168.88.242.
+On lance le serveur web avec l’url suivante :
+
+<p align="center">
+<img width="679" alt="Capture d’écran 2022-11-17 à 16 28 10" src="https://user-images.githubusercontent.com/13495977/202487969-76949d53-7eed-4063-81a4-618199fd7a49.png">
+</p>
+<p align="center">
+Figure 10 : URL de notre site web
+</p>
+
+Et on reçoit cette réponse :
+
+<p align="center">
+ <img width="727" alt="Capture d’écran 2022-11-17 à 16 30 53" src="https://user-images.githubusercontent.com/13495977/202488545-37534af4-2450-479e-87b3-38bb208a289c.png">
+</p>
+<p align="center">
+Figure 11 : Message d'arreur du site web
+</p>
+
 ```Python
 @app.route('/api/request/temp/', methods=['GET', 'POST'])
 def request_temp():
