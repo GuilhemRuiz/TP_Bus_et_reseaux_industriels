@@ -232,63 +232,34 @@ La commande ci-dessus ne fonctionne pas. C’est tout à fait normal puisque l�
 <p align="center">
 Figure 16 : Requêtes GET et POST
 </p>
-
-```Python
-@app.route('/api/welcome/<int:index>', methods=['GET','POST'])
-```
-
+ 
 <p align="center">
-<img width="750" alt="Capture d’écran 2022-11-17 à 16 54 16" src="https://user-images.githubusercontent.com/13495977/202494386-c7c2ef23-830a-40c5-a5ec-ae9506502af1.png">
+ 
 </p>
 <p align="center">
-Figure 16 : Requête POST
+Figure 5 : Fin du fichier config.txt
 </p>
 
-```Python
-@app.route('/api/request/', methods=['GET', 'POST'])
-@app.route('/api/request/<path>', methods=['GET','POST'])
-def api_request(path=None):
-   resp = {
-           "method":   request.method,
-           "url" :  request.url,
-           "path" : path,
-           "args": request.args,
-           "headers": dict(request.headers),
-   }
-   if request.method == 'POST':
-       resp["POST"] = {
-               "data" : request.get_json(),
-               }
-   if request.method == 'GET':
-       resp = request.url
-   return jsonify(resp)
-```
+## Séance 5 - Mise en commun des TP précédents
 
-## Séance 4 
+### Installation
 
-Le but de la séance est d’envoyer des commandes par protocole CAN à un moteur afin de le piloter. Nous utilisons pour ce faire une carte STM32 nucléo ainsi qu’un shield pour le CAN. 
-
-Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, la HAL_CAN_AddTxMessage nécéssite certains paramètres pour fonctionner, notamment pHeader, une structure comprenant les champs suivants :
-* `.StdId` contient le message ID quand celui-ci est standard (11 bits)
-* `.ExtId` contient le message ID quand celui-ci est étendu (29 bits) 
-* `.IDE` définit si la trame est standard (CAN_ID_STD) ou étendue (CAN_ID_EXT)
-* `.RTR` définit si la trame est du type standard (CAN_RTR_DATA) ou RTR (CAN_RTR_REMOTE) (voir le cours)
-* `.DLC` entier représentant la taille des données à transmettre (entre 0 et 8)
-* `.TransmitGlobal` dispositif permettant de mesurer les temps de réponse du bus CAN, qu'on utilisera pas. Le fixer à DISABLE
-Dans notre cas, nous voulons envoyer un message standard, donc `.ExtId` est mis à 0. Pour .StdId nous l’avons mis à 0x60. La Figure ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
+<p align = "center">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure XX), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
 
 <p align="center">
- <img width="744" alt="Capture d’écran 2022-11-17 à 16 58 33" src="https://user-images.githubusercontent.com/13495977/202495488-7c29a34c-8277-4e7f-8e9b-d8cb1bcdbac3.png">
+ <img width="757" alt="cmdApiRest" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
+<p align="center">Fig XX - Nouvelles commandes de l'API REST</p>
+
+<p align="center">Lors du TP précédent, nous avons eu des problèmes avec le moteur. Après avoir revu le cablage, la carte, le shield et le code nous avons pu résoudre notre problème. Ce dernier venait en effet de la programmation. Un fois résolu nous pouvons passer à la mise en commun des TP.
+Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à l’oscilloscope. C’est le cas. Contrairement à la dernière séance, nous n’avons plus une simple ligne droite, mais une vraie trame.</p>
+
 <p align="center">
-Figure 17 : Les différents modes de fonctionnement du moteur
+ <img width="757" alt="trameBusCAN" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
+<p align="center">Fig XX - Trame Bus CAN</p>
 
-Nous avons choisi de nous mettre en mode manuel. Il nous faut donc 3 valeurs : D0 (correspondant au sens de rotation) que nous avons mis à 0, D1 (correspondant à l’angle parcouru par le moteur à chaque itération) que nous avons mis à 0x2D (pour avoir 45°) et enfin D2 (correspondant à la vitesse de rotation) que nous avons mis à la valeur maximum : 0xFF.
-
-Cependant, notre moteur ne tourne pas. Nous ne comprenons pas d’où provient l’erreur. Le code semble correct et pourtant l’électronique est bonne. 
-Pour comprendre ce qui se passe, nous utilisons un oscilloscope qui va nous permettre de déterminer si nous envoyons des données. Il s’avère que ce n’est pas le cas. On vérifie le câblage du shield sur la Nucleo. Tout est bien branché, il n’y a pas de faux contacts, c’est le software qui est fautif. Malheureusement, nous ne pouvons plus continuer, la séance de TP touche à sa fin.
-Cependant, nous avons retiré une inconnue et nous avons déterminé que c’était la partie logicielle qui était responsable du bug.
+<p align="center">Comme nous manquons de temps, nous nous concentrons sur le capteur et sur les commandes de l’API liées. Nous étoffons donc notre code Python avec une nouvelle fonction :</p>
 
 ```Python
 @app.route('/api/request/temp/', methods=['GET', 'POST'])
@@ -306,6 +277,10 @@ def request_temp():
                 return temp, 205
 ```
 
+<p align="center">Cette fonction permet d’envoyer le chiffre 5 par UART et de lire les caractères reçus par la suite. Cette dernière permet aussi de stocker les valeurs reçues dans une base de données
+
+Nous codons juste après le fichier main.c ci-dessous qui nous permet, à la réception de la valeur 5, d’aller demander au capteur la température et la renvoyer à la RPI, toujours en utilisant l’UART.</p>
+
 ```C
 while (1)
 {
@@ -316,10 +291,14 @@ while (1)
  }
  HAL_Delay(1000);
  ```
- 
+
+<p align="center">Cependant, cela ne fonctionne pas. Nous sommes certains que le capteur de température et de pression fonctionne. Nous arrivons à récupérer ses valeurs en hexadécimal, comme en témoigne cette capture ci-dessous :</p>
+
+
 <p align="center">
- 
+ <img width="757" alt="valCaptTempPression" src="https://user-images.githubusercontent.com/114395436/202497538-a7f2b236-3802-4c6b-9d19-e663563d64a0.png">
 </p>
-<p align="center">
-Figure 5 : Fin du fichier config.txt
-</p>
+<p align="center">Fig XX - Valeurs du capteur de température et de pression en hexa</p>
+
+<p align="center">Le problème ne vient donc pas de la fonction BMP280_get_temperature(). Nous avons sans doute mal codé la récupération des requêtes envoyées depuis la RPI.
+Nous n’avons plus assez de temps et c’est dommage, car nous ne sommes pas loin de faire communiquer la Raspberry Pi avec la nucleo pour faire fonctionner le moteur.</p>
