@@ -40,7 +40,8 @@ Pour récupérer cet identifiant, nous devons suivre un schéma bien précis. Il
 <p align="center">
  
 </p>
-<p align="center">
+<p align="center" alt="boDessinWrite1" src="https://user-images.githubusercontent.com/114395436/202483787-9f77bcc1-964a-4933-81b6-f7e9b49e32cb.png">
+
 Figure 3 : JSP
 </p>
 
@@ -51,7 +52,8 @@ Puis, il faut recevoir les données que renvoie le capteur. Il nous renvoie son 
 <p align="center">
  
 </p>
-<p align="center">
+<p align="center" alt="boDessinWrite2" src="https://user-images.githubusercontent.com/114395436/202483570-b0921605-6999-439e-8641-d4063d8e3a7b.png">
+
 Figure 4 : JSP
 </p>
 
@@ -84,7 +86,7 @@ L’équipement qui gère l’attribution de ces adresses est le routeur. En nou
 <p align="center">
  
 </p>
-<p align="center">
+<p align="center" alt="angryIp" src="https://user-images.githubusercontent.com/114395436/202483086-78ad399c-f4c5-4796-bde3-e28e3fceb7a7.png">
 Figure 6 : Capture du logiciel Angry Ip Scanner
 </p>
  
@@ -98,7 +100,8 @@ Dans ce tableau, on retrouve bien notre raspberry pi à l’adresse 192.168.88.2
 <p align="center">
  
 </p>
-<p align="center">
+<p align="center" alt="paramMinicom" src="https://user-images.githubusercontent.com/114395436/202482958-b989a22f-5f5e-4eac-b8a2-af6864169e1f.png">
+
 Figure 7 : Paramètre du minicom
 </p>
 
@@ -116,7 +119,8 @@ Voici à quoi ressemble le système en l’état :
 <p align="center">
  
 </p>
-<p align="center">
+<p align="center" alt="boDessin" src="https://user-images.githubusercontent.com/114395436/202482802-a27f1afb-e03b-4bc5-a1d6-545db078ad78.png">
+
 Figure 8 : Schéma du système actuel
 </p>
 
@@ -125,7 +129,7 @@ Ensuite, nous avons testé si la communication entre le Raspberry et la STM32 es
 <p align="center">
  
 </p>
-<p align="center">
+<p align="center" alt="putty1250" src="https://user-images.githubusercontent.com/114395436/202482557-d067802d-9c0b-434e-9fde-da28bb15ee79.png">
 Figure 9 : Envoi de la température sur la RPI
 </p>
 
