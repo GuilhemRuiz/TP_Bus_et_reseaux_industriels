@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Ce projet est le résultat de 5 séances de TP fait en dernière année d'école d'ingénieur à l'ENSEA. L’objectif final est de pouvoir récupérer différentes mesures sur une STM32, tel que la température ou la pression grâce au capteur BMP280, de les envoyer vers une Raspberry Pi. Cette dernière pourra afficher les valeurs et l’utilisateur pourra y faire des requêtes telles que demander de nouvelles mesures ou les effacer. Le but des différents TP est de nous faire comprendre le principe et l'utilité de plusieurs bus industriels tels que le CAN, l’I2C et le SPI, ainsi que des liaisons comme l’UART.
+<p align ="justify">Ce projet est le résultat de 5 séances de TP fait en dernière année d'école d'ingénieur à l'ENSEA. L’objectif final est de pouvoir récupérer différentes mesures sur une STM32, tel que la température ou la pression grâce au capteur BMP280, de les envoyer vers une Raspberry Pi. Cette dernière pourra afficher les valeurs et l’utilisateur pourra y faire des requêtes telles que demander de nouvelles mesures ou les effacer. Le but des différents TP est de nous faire comprendre le principe et l'utilité de plusieurs bus industriels tels que le CAN, l’I2C et le SPI, ainsi que des liaisons comme l’UART.</p>
 
 ## Séance 1 - Bus I2C :
 
