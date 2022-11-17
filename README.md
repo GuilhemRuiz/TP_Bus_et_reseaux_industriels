@@ -168,26 +168,70 @@ Lorsqu’on rajoute la ligne de code suivante et qu’on utilise l’aide F12 su
 <img width="751" alt="Capture d’écran 2022-11-17 à 16 38 08" src="https://user-images.githubusercontent.com/13495977/202490444-a56be215-2727-4974-bc20-d5e052c53afe.png">
 </p>
 <p align="center">
-Figure 12et 13 : JSP
+Figure 12 et 13 : JSP
 </p>
 
+Contrairement à notre première tentative, on remarque que le serveur a répondu et que le contenu sur le serveur web a été téléchargé. La connexion est établie.
+
+si on ajoute ce bout de code :
+
+```Python
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
+```
+
+la page d’erreur change et donne :
 
 
 
+<p align="center">
+ <img width="757" alt="Capture d’écran 2022-11-17 à 16 42 47" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
+</p>
+<p align="center">
+Figure 14 : Problème d'affichage du template
+</p>
 
+Nous avons ajouté une condition dans le code qui renvoie une erreur 404 lorsque l’index dépasse l’index maximal du texte « Welcome to 3ESE API! » et qui nous renvoie l’index et la valeur de ce dernier dans le cas contraire.
+Voici un exemple :
 
+<p align="center">
+ <img width="754" alt="Capture d’écran 2022-11-17 à 16 45 18" src="https://user-images.githubusercontent.com/13495977/202492104-fa515f67-7ac3-47e1-84ee-477432758b0c.png">
+</p>
+<p align="center">
+Figure 15 : Nouvelle URL
+</p>
 
+Dans ce cas, l’index est 19. On reçoit ce message sur le serveur web :
 
+```
+{"index": 19, "val": "!", "indexMax":20}
+```
 
+L’index sélectionné est bien le 19, la valeur est « ! » et on se rappelle que l’indexMax est 20.
+Si on fixe la valeur de l’index à 20, on obtient ce message :
 
+<p align="center">
+ <img width="716" alt="Capture d’écran 2022-11-17 à 16 49 04" src="https://user-images.githubusercontent.com/13495977/202493040-284ba5ee-38cf-4986-9851-b1ece027515d.png">
+</p>
+<p align="center">
+Figure 15 : Autre message d'erreur 404
+</p>
 
+C’est normal, on indique à l’utilisateur que ça requête n’est pas la bonne. Il a dépassé le seuil de l’index.
 
+```
+curl -X POST http://192.168.88.242:5001/api/welcome/14
+```
 
+La commande ci-dessus ne fonctionne pas. C’est tout à fait normal puisque l’on essaye de faire un POST et que nous ne l’avons pas autorisé. Le serveur nous renvoie donc la bonne erreur : erreur 405 : méthode non autorisée. En remplaçant le post par un get dans la commande, on peut résoudre le problème et le serveur nous renvoie bien quelque chose.
 
-
-
-
-
+<p align="center">
+ <img width="750" alt="Capture d’écran 2022-11-17 à 16 50 57" src="https://user-images.githubusercontent.com/13495977/202493529-0e830be4-2b30-4133-a9d8-64d8873fe0a3.png">
+</p>
+<p align="center">
+Figure 16 : Requêtes GET et POST
+</p>
 
 
 
