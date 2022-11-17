@@ -132,11 +132,13 @@ Figure 9 : Envoi de la température sur la RPI
 Nous recevons bien les valeurs de température du capteur connecté à la STM32 sur le Raspberry.
 La communication entre les deux cartes est donc correcte. Nous pouvons donc essayer d’envoyer des requêtes et voir si nous recevons les valeurs souhaitées.
 
-`while (1)
+```C
+while (1)
 {
  if(HAL_UART_Receive(&huart3, *pData, 1, 10000) == 5){
    BMP280_get_temperature();
    int tempRecup = BMP280_get_temperature();
    HAL_UART_Transmit(&huart3, tempRecup, 1, 10000);
  }
- HAL_Delay(1000);`
+ HAL_Delay(1000);
+ ```
