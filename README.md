@@ -162,8 +162,8 @@ Figure 11 : Message d'arreur du site web
 Lorsqu’on rajoute la ligne de code suivante et qu’on utilise l’aide F12 sur chrome, on peut observer les tentatives de connexions au serveur web. 
 
 <p float="left">
-<img width="693" alt="Capture d’écran 2022-11-17 à 16 37 47" src="https://user-images.githubusercontent.com/13495977/202490418-56bc4f25-cdae-406b-9883-d848e92f5136.png">
-<img width="751" alt="Capture d’écran 2022-11-17 à 16 38 08" src="https://user-images.githubusercontent.com/13495977/202490444-a56be215-2727-4974-bc20-d5e052c53afe.png">
+<img width="300" alt="Capture d’écran 2022-11-17 à 16 37 47" src="https://user-images.githubusercontent.com/13495977/202490418-56bc4f25-cdae-406b-9883-d848e92f5136.png">
+<img width="350" alt="Capture d’écran 2022-11-17 à 16 38 08" src="https://user-images.githubusercontent.com/13495977/202490444-a56be215-2727-4974-bc20-d5e052c53afe.png">
 
 </p>
 
