@@ -38,11 +38,9 @@ Il y a deux modes de communication qui sont l’écriture et la lecture de donn�
 Pour récupérer cet identifiant, nous devons suivre un schéma bien précis. Il faut envoyer des données vers le capteur (“écrire”). Ces données sont en réalité une trame de ce type :
 
 <p align="center">
- 
+<img width="333" alt="boDessinWrite1" src="https://user-images.githubusercontent.com/114395436/202483787-9f77bcc1-964a-4933-81b6-f7e9b49e32cb.png">
 </p>
 <p align="center">
-<img width="333" alt="boDessinWrite1" src="https://user-images.githubusercontent.com/114395436/202483787-9f77bcc1-964a-4933-81b6-f7e9b49e32cb.png">
-
 Figure 3 : JSP
 </p>
 
@@ -51,11 +49,9 @@ Afin de savoir quand commence le message, le signal est mis à 1, puis à 0. L�
 Puis, il faut recevoir les données que renvoie le capteur. Il nous renvoie son id. Cette trame :
 
 <p align="center">
- 
+<img width="333" alt="boDessinWrite2" src="https://user-images.githubusercontent.com/114395436/202483570-b0921605-6999-439e-8641-d4063d8e3a7b.png">
 </p>
 <p align="center">
-<img width="333" alt="boDessinWrite2" src="https://user-images.githubusercontent.com/114395436/202483570-b0921605-6999-439e-8641-d4063d8e3a7b.png">
-
 Figure 4 : JSP
 </p>
 
@@ -83,10 +79,9 @@ L’équipement qui gère l’attribution de ces adresses est le routeur. En nou
 “Comment le savons-nous ?” - Nous avons utilisé le logiciel Angry Ip Scanner qui nous permet d’afficher tous les appareils (et donc adresses IP) présents sur le réseau local. Voici une capture de quelques adresses présentes dessus : 
 
 <p align="center">
- 
+<img width="333" alt="angryIp" src="https://user-images.githubusercontent.com/114395436/202483086-78ad399c-f4c5-4796-bde3-e28e3fceb7a7.png">
 </p>
 <p align="center">
-<img width="333" alt="angryIp" src="https://user-images.githubusercontent.com/114395436/202483086-78ad399c-f4c5-4796-bde3-e28e3fceb7a7.png">
 Figure 6 : Capture du logiciel Angry Ip Scanner
 </p>
  
@@ -98,12 +93,10 @@ Dans ce tableau, on retrouve bien notre raspberry pi à l’adresse 192.168.88.2
 #### Loopback
 
 <p align="center">
- 
+ <img width="333" alt="paramMinicom" src="https://user-images.githubusercontent.com/114395436/202482958-b989a22f-5f5e-4eac-b8a2-af6864169e1f.png">
 </p>
 <p align="center">
-<img width="333" alt="paramMinicom" src="https://user-images.githubusercontent.com/114395436/202482958-b989a22f-5f5e-4eac-b8a2-af6864169e1f.png">
-
-Figure 7 : Paramètre du minicom
+ Figure 7 : Paramètre du minicom
 </p>
 
 Dans le minicom, nous avons désactivé le flux matériel (“Hardware Flow Control”) du port série.
@@ -118,22 +111,19 @@ Lorsqu’on relie le raspberry et la stm32, il ne faut pas oublier de relier les
 Voici à quoi ressemble le système en l’état :
 
 <p align="center">
- 
+ <img width="333" alt="boDessin" src="https://user-images.githubusercontent.com/114395436/202482802-a27f1afb-e03b-4bc5-a1d6-545db078ad78.png">
 </p>
 <p align="center">
-<img width="333" alt="boDessin" src="https://user-images.githubusercontent.com/114395436/202482802-a27f1afb-e03b-4bc5-a1d6-545db078ad78.png">
-
-Figure 8 : Schéma du système actuel
+ Figure 8 : Schéma du système actuel
 </p>
 
 Ensuite, nous avons testé si la communication entre le Raspberry et la STM32 est bien établie. Nous avons donc uniquement fait communiquer les deux cartes entres-elles :
 
 <p align="center">
- 
+ <img width="333" alt="putty1250" src="https://user-images.githubusercontent.com/114395436/202482557-d067802d-9c0b-434e-9fde-da28bb15ee79.png">
 </p>
 <p align="center">
-<img width="333" alt="putty1250" src="https://user-images.githubusercontent.com/114395436/202482557-d067802d-9c0b-434e-9fde-da28bb15ee79.png">
-Figure 9 : Envoi de la température sur la RPI
+ Figure 9 : Envoi de la température sur la RPI
 </p>
 
 Nous recevons bien les valeurs de température du capteur connecté à la STM32 sur le Raspberry.
@@ -168,6 +158,31 @@ Et on reçoit cette réponse :
 <p align="center">
 Figure 11 : Message d'arreur du site web
 </p>
+
+Lorsqu’on rajoute la ligne de code suivante et qu’on utilise l’aide F12 sur chrome, on peut observer les tentatives de connexions au serveur web. 
+
+<p float="left">
+<img width="693" alt="Capture d’écran 2022-11-17 à 16 37 47" src="https://user-images.githubusercontent.com/13495977/202490418-56bc4f25-cdae-406b-9883-d848e92f5136.png">
+<img width="751" alt="Capture d’écran 2022-11-17 à 16 38 08" src="https://user-images.githubusercontent.com/13495977/202490444-a56be215-2727-4974-bc20-d5e052c53afe.png">
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```Python
 @app.route('/api/request/temp/', methods=['GET', 'POST'])
