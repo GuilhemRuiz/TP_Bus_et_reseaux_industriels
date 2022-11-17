@@ -142,6 +142,8 @@ Ensuite, nous avons testé si la communication entre le Raspberry et la STM32 es
 </p>
 <p align="center">
 <img width="333" alt="putty1250" src="https://user-images.githubusercontent.com/114395436/202482557-d067802d-9c0b-434e-9fde-da28bb15ee79.png">
+ </p>
+<p align="center">
 Figure 9 : Envoi de la température sur la RPI
 </p>
 
