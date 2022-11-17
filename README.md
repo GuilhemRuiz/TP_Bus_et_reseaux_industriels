@@ -242,24 +242,26 @@ Figure 5 : Fin du fichier config.txt
 
 ## Séance 5 - Mise en commun des TP précédents
 
-### Installation
+### Introduction au TP
 
-<p align = "center">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure XX), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
+Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure XX), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.
 
 <p align="center">
  <img width="757" alt="cmdApiRest" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
 <p align="center">Fig XX - Nouvelles commandes de l'API REST</p>
 
-<p align="center">Lors du TP précédent, nous avons eu des problèmes avec le moteur. Après avoir revu le cablage, la carte, le shield et le code nous avons pu résoudre notre problème. Ce dernier venait en effet de la programmation. Un fois résolu nous pouvons passer à la mise en commun des TP.
-Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à l’oscilloscope. C’est le cas. Contrairement à la dernière séance, nous n’avons plus une simple ligne droite, mais une vraie trame.</p>
+### Réception et transmission - Trame du bus CAN
+
+Lors du TP précédent, nous avons eu des problèmes avec le moteur. Après avoir revu le cablage, la carte, le shield et le code nous avons pu résoudre notre problème. Ce dernier venait en effet de la programmation. Une fois résolu nous pouvons passer à la mise en commun des TP.
+Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à l’oscilloscope. C’est le cas. Contrairement à la dernière séance, nous n’avons plus une simple ligne droite, mais une vraie trame.
 
 <p align="center">
  <img width="757" alt="trameBusCAN" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
 <p align="center">Fig XX - Trame Bus CAN</p>
 
-<p align="center">Comme nous manquons de temps, nous nous concentrons sur le capteur et sur les commandes de l’API liées. Nous étoffons donc notre code Python avec une nouvelle fonction :</p>
+Comme nous manquons de temps, nous nous concentrons sur le capteur et sur les commandes de l’API liées. Nous étoffons donc notre code Python avec une nouvelle fonction :
 
 ```Python
 @app.route('/api/request/temp/', methods=['GET', 'POST'])
@@ -277,9 +279,9 @@ def request_temp():
                 return temp, 205
 ```
 
-<p align="center">Cette fonction permet d’envoyer le chiffre 5 par UART et de lire les caractères reçus par la suite. Cette dernière permet aussi de stocker les valeurs reçues dans une base de données
+Cette fonction permet d’envoyer le chiffre 5 par UART et de lire les caractères reçus par la suite. Cette dernière permet aussi de stocker les valeurs reçues dans une base de données
 
-Nous codons juste après le fichier main.c ci-dessous qui nous permet, à la réception de la valeur 5, d’aller demander au capteur la température et la renvoyer à la RPI, toujours en utilisant l’UART.</p>
+Nous codons juste après le fichier main.c ci-dessous qui nous permet, à la réception de la valeur 5, d’aller demander au capteur la température et la renvoyer à la RPI, toujours en utilisant l’UART.
 
 ```C
 while (1)
@@ -292,7 +294,7 @@ while (1)
  HAL_Delay(1000);
  ```
 
-<p align="center">Cependant, cela ne fonctionne pas. Nous sommes certains que le capteur de température et de pression fonctionne. Nous arrivons à récupérer ses valeurs en hexadécimal, comme en témoigne cette capture ci-dessous :</p>
+Cependant, cela ne fonctionne pas. Nous sommes certains que le capteur de température et de pression fonctionne. Nous arrivons à récupérer ses valeurs en hexadécimal, comme en témoigne cette capture ci-dessous :
 
 
 <p align="center">
@@ -300,5 +302,5 @@ while (1)
 </p>
 <p align="center">Fig XX - Valeurs du capteur de température et de pression en hexa</p>
 
-<p align="center">Le problème ne vient donc pas de la fonction BMP280_get_temperature(). Nous avons sans doute mal codé la récupération des requêtes envoyées depuis la RPI.
-Nous n’avons plus assez de temps et c’est dommage, car nous ne sommes pas loin de faire communiquer la Raspberry Pi avec la nucleo pour faire fonctionner le moteur.</p>
+Le problème ne vient donc pas de la fonction BMP280_get_temperature(). Nous avons sans doute mal codé la récupération des requêtes envoyées depuis la RPI.
+Nous n’avons plus assez de temps et c’est dommage, car nous ne sommes pas loin de faire communiquer la Raspberry Pi avec la nucleo pour faire fonctionner le moteur.
