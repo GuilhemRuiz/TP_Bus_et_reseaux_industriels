@@ -232,6 +232,19 @@ curl -X POST http://192.168.88.242:5001/api/welcome/14
 Figure 16 : Requêtes GET et POST
 </p>
 
+# Séance 4 
+
+Le but de la séance est d’envoyer des commandes par protocole CAN à un moteur afin de le piloter. Nous utilisons pour ce faire une carte STM32 nucléo ainsi qu’un shield pour le CAN. 
+
+Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, la HAL_CAN_AddTxMessage nécéssite certains paramètres pour fonctionner, notamment pHeader, une structure comprenant les champs suivants :
+* `.StdId` contient le message ID quand celui-ci est standard (11 bits)
+* `.ExtId` contient le message ID quand celui-ci est étendu (29 bits) 
+* `.IDE` définit si la trame est standard (CAN_ID_STD) ou étendue (CAN_ID_EXT)
+* `.RTR` définit si la trame est du type standard (CAN_RTR_DATA) ou RTR (CAN_RTR_REMOTE) (voir le cours)
+* `.DLC` entier représentant la taille des données à transmettre (entre 0 et 8)
+* `.TransmitGlobal` dispositif permettant de mesurer les temps de réponse du bus CAN, qu'on utilisera pas. Le fixer à DISABLE
+Dans notre cas, nous voulons envoyer un message standard, donc ExtId est mis à 0. Pour `.StdId` nous l’avons mis à 0x60. La Figure ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
+
 
 ## Séance 5 - Mise en commun des TP précédents
 
