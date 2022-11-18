@@ -234,7 +234,7 @@ Figure 16 : Requêtes GET et POST
 
 # Séance 4 
 
-Le but de la séance est d’envoyer des commandes par protocole CAN à un moteur afin de le piloter. Nous utilisons pour ce faire une carte STM32 nucléo ainsi qu’un shield pour le CAN. 
+<p align="justify">Le but de la séance est d’envoyer des commandes par protocole CAN à un moteur afin de le piloter. Nous utilisons pour ce faire une carte STM32 nucléo ainsi qu’un shield pour le CAN.</p>
 
 Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, la `HAL_CAN_AddTxMessage` nécéssite certains paramètres pour fonctionner, notamment pHeader, une structure comprenant les champs suivants :
 * `.StdId` contient le message ID quand celui-ci est standard (11 bits)
@@ -252,10 +252,10 @@ Dans notre cas, nous voulons envoyer un message standard, donc `.ExtId` est mis 
 Figure 17 : Les différents modes de fonctionnement du moteur
 </p>
 
-Nous avons choisi de nous mettre en mode manuel. Il nous faut donc 3 valeurs : D0 (correspondant au sens de rotation) que nous avons mis à 0, D1 (correspondant à l’angle parcouru par le moteur à chaque itération) que nous avons mis à 0x2D (pour avoir 45°) et enfin D2 (correspondant à la vitesse de rotation) que nous avons mis à la valeur maximum : 0xFF.
+<p align="justify">Nous avons choisi de nous mettre en mode manuel. Il nous faut donc 3 valeurs : D0 (correspondant au sens de rotation) que nous avons mis à 0, D1 (correspondant à l’angle parcouru par le moteur à chaque itération) que nous avons mis à 0x2D (pour avoir 45°) et enfin D2 (correspondant à la vitesse de rotation) que nous avons mis à la valeur maximum : 0xFF.
 Cependant, notre moteur ne tourne pas. Nous ne comprenons pas d’où provient l’erreur. Le code semble correct et l’électronique est bonne. 
 Pour comprendre ce qui se passe, nous utilisons un oscilloscope qui va nous permettre de déterminer si nous envoyons des données. Il s’avère que ce n’est pas le cas. On vérifie le câblage du shield sur la Nucleo. Tout est bien branché, il n’y a pas de faux contacts, c’est le software qui est fautif. Malheureusement, nous ne pouvons plus continuer, la séance de TP touche à sa fin.
-Cependant, nous avons retiré une inconnue et nous avons déterminé que c’était la partie logicielle qui était responsable du bug.
+Cependant, nous avons retiré une inconnue et nous avons déterminé que c’était la partie logicielle qui était responsable du bug.</p>
 
 ## Séance 5 - Mise en commun des TP précédents
 
@@ -298,7 +298,7 @@ def request_temp():
                 return temp, 205
 ```
 
-<p align ="justify">Cette fonction permet d’envoyer le chiffre 5 par UART et de lire les caractères reçus par la suite. Cette dernière permet aussi de stocker les valeurs reçues dans une base de données.
+<p align ="justify">Cette fonction permet d’envoyer le chiffre 5 par UART et de lire les caractères reçus par la suite. Elle permet aussi de stocker les valeurs reçues dans une base de données.
 
 Nous codons juste après le fichier `main.c` ci-dessous qui nous permet, à la réception de la valeur 5, d’aller demander au capteur la température et la renvoyer à la RPI, toujours en utilisant l’UART.</p>
 
