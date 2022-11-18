@@ -57,7 +57,7 @@ Figure 4 : Lecture de trame
 
 <p align ="justify">La trame est sensiblement la même que précédemment, à défaut que le message envoyé par le capteur BMP280 correspond à son ID, c’est-à-dire 0x58. Il est intéressant de noter que le bit d’écriture/lecture est mis à 1, car nous sommes en mode lecture.
 
-On peut aussi noter la présence du type de variable `uint8_t` à la place d’un int pour déclarer le tableau. Chaque case du tableau fait un octet, contrairement à un int qui en contient deux. Comme l’I2C ne peut envoyer qu’un octet à la fois, il est préférable d’utiliser `uint8_t`.</p>
+On peut aussi noter la présence du type de variable `uint8_t` à la place d’un int pour déclarer le tableau. Chaque case du tableau fait un octet, contrairement à un int qui en contient quatre. Comme l’I2C ne peut envoyer qu’un octet à la fois, il est préférable d’utiliser `uint8_t`.</p>
 
 
 
@@ -138,7 +138,7 @@ Créons maintenant un serveur web. Pour cela nous allons utiliser le framework F
 
 ```pi@raspberrypi:~/server $ FLASK_APP=hello.py FLASK_ENV=development flask run --host 0.0.0.0```
 
-<p align ="justify">Cette commande nous permet de sortir de la loopback. C’est-à-dire, qu’avant cette commande, nous ne restons que sur le terminal.  Après cette commande, nous pouvons afficher notre « Hello World ! » sur notre serveur web sur le même réseau local.
+<p align ="justify">Cette commande nous permet de sortir de la loopback. C’est-à-dire, qu’avant cette commande, nous ne restions que sur la RPI.  Après cette commande, nous pouvons afficher notre « Hello World ! » sur notre serveur web sur le même réseau local.
 Pour vérifier si le programme fonctionne correctement, il suffit de rentrer l’adresse IP du Raspberry et son port (192.168.88.242:5000) sur notre navigateur favori.
 « Host 0.0.0.0 » explique à notre Raspberry qu’on lance le serveur web à l’adresse actuelle, donc 192.168.88.242.
 On lance le serveur web avec l’url suivante :</p>
@@ -214,22 +214,22 @@ Si on fixe la valeur de l’index à 20, on obtient ce message :
  <img width="716" alt="Capture d’écran 2022-11-17 à 16 49 04" src="https://user-images.githubusercontent.com/13495977/202493040-284ba5ee-38cf-4986-9851-b1ece027515d.png">
 </p>
 <p align="center">
-Figure 15 : Autre message d'erreur 404
+Figure 16 : Autre message d'erreur 404
 </p>
 
-C’est normal, on indique à l’utilisateur que ça requête n’est pas la bonne. Il a dépassé le seuil de l’index.
+C’est normal, on indique à l’utilisateur que sa requête n’est pas la bonne. Il a dépassé le seuil de l’index.
 
 ```
 curl -X POST http://192.168.88.242:5001/api/welcome/14
 ```
 
-<p align ="justify">La commande ci-dessus ne fonctionne pas. C’est tout à fait normal puisque l’on essaye de faire un POST et que nous ne l’avons pas autorisé. Le serveur nous renvoie donc la bonne erreur : erreur 405 : méthode non autorisée. En remplaçant le post par un get dans la commande, on peut résoudre le problème et le serveur nous renvoie bien quelque chose.</p>
+<p align ="justify">La commande ci-dessus ne fonctionne pas. C’est tout à fait normal puisque l’on essaye de faire un POST et que nous ne l’avons pas autorisé. Le serveur nous renvoie donc la bonne erreur : erreur 405 : méthode non autorisée. En remplaçant le POST par un GET dans la commande, on peut résoudre le problème et le serveur nous renvoie bien quelque chose.</p>
 
 <p align="center">
  <img width="750" alt="Capture d’écran 2022-11-17 à 16 50 57" src="https://user-images.githubusercontent.com/13495977/202493529-0e830be4-2b30-4133-a9d8-64d8873fe0a3.png">
 </p>
 <p align="center">
-Figure 16 : Requêtes GET et POST
+Figure 17 : Requêtes GET et POST
 </p>
 
 # Séance 4 
@@ -243,13 +243,13 @@ Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, 
 * `.RTR` définit si la trame est du type standard (CAN_RTR_DATA) ou RTR (CAN_RTR_REMOTE) (voir le cours)
 * `.DLC` entier représentant la taille des données à transmettre (entre 0 et 8)
 * `.TransmitGlobal` dispositif permettant de mesurer les temps de réponse du bus CAN, qu'on utilisera pas. Le fixer à DISABLE
-Dans notre cas, nous voulons envoyer un message standard, donc `.ExtId` est mis à 0. Pour `.StdId` nous l’avons mis à 0x60. La Figure 17 ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
+Dans notre cas, nous voulons envoyer un message standard, donc `.ExtId` est mis à 0. Pour `.StdId` nous l’avons mis à 0x60. La Figure 18 ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
 
 <p align="center">
 <img width="1099" alt="Capture d’écran 2022-11-15 à 22 12 56" src="https://user-images.githubusercontent.com/13495977/202691153-ee48334e-6ada-47af-bda0-88a720bd239c.png">
 </p>
 <p align="center">
-Figure 17 : Les différents modes de fonctionnement du moteur
+Figure 18 : Les différents modes de fonctionnement du moteur
 </p>
 
 <p align="justify">Nous avons choisi de nous mettre en mode manuel. Il nous faut donc 3 valeurs : D0 (correspondant au sens de rotation) que nous avons mis à 0, D1 (correspondant à l’angle parcouru par le moteur à chaque itération) que nous avons mis à 0x2D (pour avoir 45°) et enfin D2 (correspondant à la vitesse de rotation) que nous avons mis à la valeur maximum : 0xFF.
@@ -261,24 +261,24 @@ Cependant, nous avons retiré une inconnue et nous avons déterminé que c’ét
 
 ### Introduction au TP
 
-<p align ="justify">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure 17), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
+<p align ="justify">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure 19), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
 
 
 <p align="center">
  <img width="532" alt="Capture d’écran 2022-11-17 à 15 26 58" src="https://user-images.githubusercontent.com/13495977/202692390-79231f79-42d3-481c-9bf8-40a2dcac0b8e.png">
 </p>
-<p align="center">Figure 18 - Nouvelles commandes de l'API REST</p>
+<p align="center">Figure 19 - Nouvelles commandes de l'API REST</p>
 
 ### Réception et transmission - Trame du bus CAN
 
-<p align ="justify">Lors du TP précédent, nous avons eu des problèmes avec le moteur. Après avoir revu le cablage, la carte, le shield et le code nous avons pu résoudre notre problème. Ce dernier venait en effet de la programmation. Une fois résolu nous pouvons passer à la mise en commun des TP.
+<p align ="justify">Lors du TP précédent, nous avons eu des problèmes avec le moteur. Après avoir revu le cablage, la carte, le shield et le code nous avons pu résoudre notre problème. Ce dernier venait en effet de la programmation. Une fois résolu, nous pouvons passer à la mise en commun des TP.
 Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à l’oscilloscope. C’est le cas. Contrairement à la dernière séance, nous n’avons plus une simple ligne droite, mais une vraie trame.</p>
 
 <p align="center">
 <img width="791" alt="Capture d’écran 2022-11-18 à 12 10 34" src="https://user-images.githubusercontent.com/13495977/202692252-6d9a7c0e-0879-4a86-a09b-9c1f949d0570.png">
 
 </p>
-<p align="center">Figure 19 - Trame Bus CAN</p>
+<p align="center">Figure 20 - Trame Bus CAN</p>
 
 <p align ="justify">Comme nous manquons de temps, nous nous concentrons sur le capteur et sur les commandes de l’API liées. Nous étoffons donc notre code Python avec une nouvelle fonction :</p>
 
@@ -319,7 +319,7 @@ while (1)
 <p align="center">
  <img width="150" alt="valCaptTempPression" src="https://user-images.githubusercontent.com/114395436/202497538-a7f2b236-3802-4c6b-9d19-e663563d64a0.png">
 </p>
-<p align="center">Fig 20 - Valeurs du capteur de température et de pression en hexa</p>
+<p align="center">Fig 21 - Valeurs du capteur de température et de pression en hexa</p>
 
-<p align ="justify">Le problème ne vient donc pas de la fonction BMP280_get_temperature(). Nous avons sans doute mal codé la récupération des requêtes envoyées depuis la RPI.
-Nous n’avons plus assez de temps et c’est dommage, car nous ne sommes pas loin de faire communiquer la Raspberry Pi avec la nucleo pour faire fonctionner le moteur.</p>
+<p align ="justify">Le problème ne vient donc pas de la fonction `BMP280_get_temperature()`. Nous avons sans doute mal codé la récupération des requêtes envoyées depuis la RPI.
+Nous n’avons plus assez de temps et c’est dommage, car nous ne sommes pas loin de faire communiquer la Raspberry Pi avec la nucleo pour faire fonctionner le capteur.</p>
