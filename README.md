@@ -243,8 +243,19 @@ Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, 
 * `.RTR` définit si la trame est du type standard (CAN_RTR_DATA) ou RTR (CAN_RTR_REMOTE) (voir le cours)
 * `.DLC` entier représentant la taille des données à transmettre (entre 0 et 8)
 * `.TransmitGlobal` dispositif permettant de mesurer les temps de réponse du bus CAN, qu'on utilisera pas. Le fixer à DISABLE
-Dans notre cas, nous voulons envoyer un message standard, donc ExtId est mis à 0. Pour `.StdId` nous l’avons mis à 0x60. La Figure ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
+Dans notre cas, nous voulons envoyer un message standard, donc `.ExtId` est mis à 0. Pour `.StdId` nous l’avons mis à 0x60. La Figure 17 ci-après nous montre les différentes valeurs que peut contenir le `.StdId`. 
 
+<p align="center">
+<img width="1099" alt="Capture d’écran 2022-11-15 à 22 12 56" src="https://user-images.githubusercontent.com/13495977/202691153-ee48334e-6ada-47af-bda0-88a720bd239c.png">
+</p>
+<p align="center">
+Figure 17 : Les différents modes de fonctionnement du moteur
+</p>
+
+Nous avons choisi de nous mettre en mode manuel. Il nous faut donc 3 valeurs : D0 (correspondant au sens de rotation) que nous avons mis à 0, D1 (correspondant à l’angle parcouru par le moteur à chaque itération) que nous avons mis à 0x2D (pour avoir 45°) et enfin D2 (correspondant à la vitesse de rotation) que nous avons mis à la valeur maximum : 0xFF.
+Cependant, notre moteur ne tourne pas. Nous ne comprenons pas d’où provient l’erreur. Le code semble correct et l’électronique est bonne. 
+Pour comprendre ce qui se passe, nous utilisons un oscilloscope qui va nous permettre de déterminer si nous envoyons des données. Il s’avère que ce n’est pas le cas. On vérifie le câblage du shield sur la Nucleo. Tout est bien branché, il n’y a pas de faux contacts, c’est le software qui est fautif. Malheureusement, nous ne pouvons plus continuer, la séance de TP touche à sa fin.
+Cependant, nous avons retiré une inconnue et nous avons déterminé que c’était la partie logicielle qui était responsable du bug.
 
 ## Séance 5 - Mise en commun des TP précédents
 
@@ -255,7 +266,7 @@ Dans notre cas, nous voulons envoyer un message standard, donc ExtId est mis à 
 <p align="center">
  <img width="757" alt="cmdApiRest" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
-<p align="center">Figure 17 - Nouvelles commandes de l'API REST</p>
+<p align="center">Figure 18 - Nouvelles commandes de l'API REST</p>
 
 ### Réception et transmission - Trame du bus CAN
 
@@ -265,7 +276,7 @@ Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à
 <p align="center">
  <img width="757" alt="trameBusCAN" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
 </p>
-<p align="center">Figure 18 - Trame Bus CAN</p>
+<p align="center">Figure 19 - Trame Bus CAN</p>
 
 <p align ="justify">Comme nous manquons de temps, nous nous concentrons sur le capteur et sur les commandes de l’API liées. Nous étoffons donc notre code Python avec une nouvelle fonction :</p>
 
@@ -306,7 +317,7 @@ while (1)
 <p align="center">
  <img width="150" alt="valCaptTempPression" src="https://user-images.githubusercontent.com/114395436/202497538-a7f2b236-3802-4c6b-9d19-e663563d64a0.png">
 </p>
-<p align="center">Fig XX - Valeurs du capteur de température et de pression en hexa</p>
+<p align="center">Fig 20 - Valeurs du capteur de température et de pression en hexa</p>
 
 <p align ="justify">Le problème ne vient donc pas de la fonction BMP280_get_temperature(). Nous avons sans doute mal codé la récupération des requêtes envoyées depuis la RPI.
 Nous n’avons plus assez de temps et c’est dommage, car nous ne sommes pas loin de faire communiquer la Raspberry Pi avec la nucleo pour faire fonctionner le moteur.</p>
