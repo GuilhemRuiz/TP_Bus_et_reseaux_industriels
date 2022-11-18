@@ -15,7 +15,7 @@
 
 * Il existe deux adresses possibles pour ce composant : 0x76 et 0x77. Cela dépend de où est connecté SDO (sur le GND ou sur VDDIO respectivement). Dans notre cas, nous utiliserons l’adresse 0x77.
 * Le registre 0xD0 permet d’identifier ce composant. Sa valeur est 0x58.
-* Le registre permettant de placer le composant en mode normal est 0xF4. La Figure 2 ci-dessous nous présente les différents modes de fonctionnements possibles du capteur. Dans notre cas, il faut mettre les deux bits de poids faible à un pour que le capteur soit en mode normal.
+* Le registre permettant de placer le composant en mode normal est 0xF4. La Figure 2 ci-dessous nous présente les différents modes de fonctionnement possibles du capteur. Dans notre cas, il faut mettre les deux bits de poids faible à un pour que le capteur soit en mode normal.
 
 <p align="center">
 <img width="333" alt="Capture d’écran 2022-10-25 à 10 03 41" src="https://user-images.githubusercontent.com/13495977/197718942-b4600be4-9208-4a67-a0b9-d0f2382a0b53.png"></p>
@@ -65,7 +65,7 @@ On peut aussi noter la présence du type de variable `uint8_t` à la place d’u
 
 ### Mise en route du raspberry pi Zéro 
 
-<p align ="justify">Pour configurer le SSID et le mot de passe  du wifi, nous utilisons le logiciel Raspberry Pi Imager. Cependant, pour connecter le port série du GPIO, nous modifions le contenu du fichier config.txt. Nous ajoutons les deux lignes suivantes à la fin du fichier :</p>
+<p align ="justify">Pour configurer le SSID et le mot de passe du wifi, nous utilisons le logiciel Raspberry Pi Imager. Cependant, pour connecter le port série du GPIO, nous modifions le contenu du fichier config.txt. Nous ajoutons les deux lignes suivantes à la fin du fichier :</p>
 
 ```
 enable_uart=1
@@ -236,7 +236,7 @@ Figure 16 : Requêtes GET et POST
 
 Le but de la séance est d’envoyer des commandes par protocole CAN à un moteur afin de le piloter. Nous utilisons pour ce faire une carte STM32 nucléo ainsi qu’un shield pour le CAN. 
 
-Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, la HAL_CAN_AddTxMessage nécéssite certains paramètres pour fonctionner, notamment pHeader, une structure comprenant les champs suivants :
+Pour le code, il nous faut utiliser les primitives HAL. L’une d’entre elle, la `HAL_CAN_AddTxMessage` nécéssite certains paramètres pour fonctionner, notamment pHeader, une structure comprenant les champs suivants :
 * `.StdId` contient le message ID quand celui-ci est standard (11 bits)
 * `.ExtId` contient le message ID quand celui-ci est étendu (29 bits) 
 * `.IDE` définit si la trame est standard (CAN_ID_STD) ou étendue (CAN_ID_EXT)
@@ -263,8 +263,9 @@ Cependant, nous avons retiré une inconnue et nous avons déterminé que c’ét
 
 <p align ="justify">Le but de ce TP est de mettre en commun les TP précédents afin que tout fonctionne en même temps. Plus précisément, l’objectif est retravailler sur l’API REST afin qu’elle puisse envoyer de nouvelles commandes (cf. Figure 17), notamment acquérir les données des capteurs et des moteurs. On pourra aussi modifier certaines valeurs comme celles des moteurs par exemple.</p>
 
+
 <p align="center">
- <img width="757" alt="cmdApiRest" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
+ <img width="532" alt="Capture d’écran 2022-11-17 à 15 26 58" src="https://user-images.githubusercontent.com/13495977/202692390-79231f79-42d3-481c-9bf8-40a2dcac0b8e.png">
 </p>
 <p align="center">Figure 18 - Nouvelles commandes de l'API REST</p>
 
@@ -274,7 +275,8 @@ Cependant, nous avons retiré une inconnue et nous avons déterminé que c’ét
 Nous vérifions que la trame du bus CAN soit bien reçue par le moteur grâce à l’oscilloscope. C’est le cas. Contrairement à la dernière séance, nous n’avons plus une simple ligne droite, mais une vraie trame.</p>
 
 <p align="center">
- <img width="757" alt="trameBusCAN" src="https://user-images.githubusercontent.com/13495977/202491431-b7e4c1a7-17df-4811-8309-28b29ca4f9da.png">
+<img width="791" alt="Capture d’écran 2022-11-18 à 12 10 34" src="https://user-images.githubusercontent.com/13495977/202692252-6d9a7c0e-0879-4a86-a09b-9c1f949d0570.png">
+
 </p>
 <p align="center">Figure 19 - Trame Bus CAN</p>
 
@@ -298,7 +300,7 @@ def request_temp():
 
 <p align ="justify">Cette fonction permet d’envoyer le chiffre 5 par UART et de lire les caractères reçus par la suite. Cette dernière permet aussi de stocker les valeurs reçues dans une base de données.
 
-Nous codons juste après le fichier main.c ci-dessous qui nous permet, à la réception de la valeur 5, d’aller demander au capteur la température et la renvoyer à la RPI, toujours en utilisant l’UART.</p>
+Nous codons juste après le fichier `main.c` ci-dessous qui nous permet, à la réception de la valeur 5, d’aller demander au capteur la température et la renvoyer à la RPI, toujours en utilisant l’UART.</p>
 
 ```C
 while (1)
